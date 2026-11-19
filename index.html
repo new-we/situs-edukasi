@@ -268,6 +268,42 @@
       .dl h3{ font-size:20px; margin:0 0 4px; line-height:1.3; }
       .dl p{ color:var(--ink-soft); font-size:14.5px; margin:0; max-width:58ch; }
 
+      /* ---------- Referral Muse ---------- */
+      .ref{
+        border:1px solid var(--line); border-top:3px solid var(--accent);
+        background:var(--panel); padding:clamp(20px, 4vw, 30px);
+        display:grid; grid-template-columns:1fr 1fr; gap:10px 40px;
+      }
+      .ref h3{ font-size:22px; font-weight:800; margin:0 0 6px; line-height:1.25; }
+      .ref p{ color:var(--ink-soft); font-size:15px; margin:0 0 16px; max-width:52ch; }
+      .ref p strong{ color:var(--ink); }
+      .ref-code-label{ font-family:"IBM Plex Mono", monospace; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 8px; }
+      .ref-code-row{ display:flex; flex-wrap:wrap; gap:10px; align-items:stretch; margin-bottom:16px; }
+      .ref-code{
+        font-family:"IBM Plex Mono", monospace; font-size:30px; font-weight:600; letter-spacing:.18em;
+        color:var(--accent); background:var(--bg-soft);
+        border:1px dashed var(--line); border-radius:var(--radius);
+        padding:8px 18px; display:inline-flex; align-items:center;
+      }
+      .ref-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+      .ref-steps{ margin:0; padding:0; list-style:none; counter-reset:refstep; }
+      .ref-steps li{
+        counter-increment:refstep; position:relative;
+        padding:10px 0 10px 46px; border-top:1px solid var(--line-soft);
+        color:var(--ink-soft); font-size:15px;
+      }
+      .ref-steps li:first-child{ border-top:none; padding-top:2px; }
+      .ref-steps li::before{
+        content:counter(refstep, decimal-leading-zero);
+        position:absolute; left:0; top:10px;
+        font-family:"IBM Plex Mono", monospace; font-size:13px; font-weight:600; color:var(--accent);
+      }
+      .ref-steps li:first-child::before{ top:2px; }
+      .ref-steps strong{ color:var(--ink); }
+      .ref-steps a{ color:var(--accent); font-weight:700; text-decoration:none; }
+      .ref-steps a:hover{ text-decoration:underline; }
+      @media (max-width:760px){ .ref{ grid-template-columns:1fr; } }
+
       footer{ border-top:2px solid var(--ink); margin-top:60px; padding:24px 0 40px; color:var(--ink-mute); font-size:14px; }
       footer .wrap{ display:flex; flex-wrap:wrap; gap:10px 22px; justify-content:space-between; align-items:baseline; }
       footer nav{ display:flex; flex-wrap:wrap; gap:6px 16px; }
@@ -380,6 +416,37 @@
                 <span class="go">Buka halaman unduh <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
               </div>
             </a>
+          </div>
+        </section>
+
+        <section class="block" id="muse-block">
+          <div class="sec-head">
+            <span class="idx">03</span>
+            <h2>Coba Muse, pakai kodeku</h2>
+          </div>
+          <p class="sec-sub">Muse itu agen AI pribadi — asisten yang bisa diajak kerja beneran, bukan sekadar tanya-jawab. Daftar lewat link di bawah, lalu tukarkan kode referralku. Kita berdua dapat <strong style="color:var(--ink);">1 miliar token Muse</strong>.</p>
+          <div class="ref">
+            <div>
+              <h3>Kode referral</h3>
+              <p class="ref-code-label">Kodeku</p>
+              <div class="ref-code-row">
+                <span class="ref-code" id="ref-code">0N34XK</span>
+                <button class="btn" type="button" id="ref-copy">Salin kode</button>
+              </div>
+              <div class="ref-actions">
+                <a class="btn primary" href="https://muse.ai/join" target="_blank" rel="noopener">Daftar di muse.ai/join</a>
+              </div>
+            </div>
+            <div>
+              <h3>Cara daftarnya</h3>
+              <ol class="ref-steps">
+                <li>Buka <a href="https://muse.ai/join" target="_blank" rel="noopener"><strong>muse.ai/join</strong></a>, lalu buat akun dan bergabung.</li>
+                <li>Setelah masuk, buka menu <strong>Settings</strong>.</li>
+                <li>Masukkan kode <strong>0N34XK</strong> di bagian penukaran kode, lalu tukarkan.</li>
+                <li>Penukaran harus dilakukan <strong>dalam 48 jam</strong> setelah bergabung — lewat dari itu kodenya tidak berlaku.</li>
+                <li>Selesai. Kamu dan aku sama-sama dapat <strong>1 miliar token Muse</strong>.</li>
+              </ol>
+            </div>
           </div>
         </section>
       </div>
@@ -717,6 +784,7 @@
         var searchCount = document.getElementById("search-count");
         var kategoriBlock = document.getElementById("kategori-block");
         var lainnyaBlock = document.getElementById("lainnya-block");
+        var museBlock = document.getElementById("muse-block");
 
         function renderHomeSearch() {
           if (!homeQuery) {
@@ -724,10 +792,12 @@
             searchNote.hidden = true;
             kategoriBlock.hidden = false;
             lainnyaBlock.hidden = false;
+            museBlock.hidden = false;
             return;
           }
           kategoriBlock.hidden = true;
           lainnyaBlock.hidden = true;
+          museBlock.hidden = true;
           searchBlock.hidden = false;
           searchNote.hidden = false;
           searchGrid.innerHTML = "";
@@ -748,6 +818,34 @@
           homeQuery = searchEl.value.trim().toLowerCase();
           renderHomeSearch();
         });
+
+        // ---- Referral Muse: tombol salin kode ----
+        var refCopyBtn = document.getElementById("ref-copy");
+        if (refCopyBtn) {
+          refCopyBtn.addEventListener("click", function () {
+            var code = document.getElementById("ref-code").textContent.trim();
+            function done() {
+              refCopyBtn.textContent = "Tersalin ✓";
+              setTimeout(function () { refCopyBtn.textContent = "Salin kode"; }, 2000);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(code).then(done, function () { fallbackCopy(code); done(); });
+            } else {
+              fallbackCopy(code);
+              done();
+            }
+            function fallbackCopy(text) {
+              var ta = document.createElement("textarea");
+              ta.value = text;
+              ta.style.position = "fixed";
+              ta.style.opacity = "0";
+              document.body.appendChild(ta);
+              ta.select();
+              try { document.execCommand("copy"); } catch (e) {}
+              document.body.removeChild(ta);
+            }
+          });
+        }
 
         // ---- Halaman kategori ----
         var crumbCat = document.getElementById("crumb-cat");
