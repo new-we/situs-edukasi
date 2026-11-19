@@ -459,6 +459,33 @@
             </div>
           </div>
         </section>
+
+        <section class="block" id="trakteer-block">
+          <div class="sec-head">
+            <span class="idx">05</span>
+            <h2>Dukung lewat Trakteer</h2>
+          </div>
+          <p class="sec-sub">Semua isi situs ini tetap gratis — skill, tutorial, dan berkas unduhannya. Kalau ada yang kepakai dan kamu mau traktir, link Trakteerku ada di bawah ini. Bukan syarat buat mengakses apa pun, cuma buat yang mau mendukung karya berikutnya.</p>
+          <div class="ref">
+            <div>
+              <h3>Traktir di Trakteer</h3>
+              <p>Profilku sekarang bernama <strong>RupaRupaID</strong>. Sekali traktir mulai dari <strong>1 Kopi Sachet (Rp1.000)</strong>, dan ada reward <strong>Kartu Terima Kasih Premium</strong> buat yang traktir.</p>
+              <div class="ref-actions">
+                <a class="btn primary" href="https://trakteer.id/yasshavi/tip" target="_blank" rel="noopener">Traktir di Trakteer</a>
+                <a class="btn" href="https://trakteer.id/yasshavi" target="_blank" rel="noopener">Lihat profil RupaRupaID</a>
+              </div>
+            </div>
+            <div>
+              <h3>Cara traktirnya</h3>
+              <ol class="ref-steps">
+                <li>Buka <a href="https://trakteer.id/yasshavi/tip" target="_blank" rel="noopener"><strong>trakteer.id/yasshavi/tip</strong></a>.</li>
+                <li>Tentukan jumlah unit <strong>Kopi Sachet</strong> yang mau kamu berikan.</li>
+                <li>Selesaikan pembayaran di halaman Trakteer.</li>
+                <li>Reward <strong>Kartu Terima Kasih Premium</strong> tersedia buat pendukung — 1 unit sudah cukup buat mengklaimnya.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- ================= HALAMAN KATEGORI ================= -->
@@ -649,6 +676,7 @@
           <a href="#/kategori/menulis-dan-tampilan">Menulis &amp; Tampilan</a>
           <a href="#/tutorial">Tutorial</a>
           <a href="#/unduh">Unduh</a>
+          <a href="https://trakteer.id/yasshavi/tip" target="_blank" rel="noopener">Trakteer</a>
         </nav>
         <span>Semua isi dan unduhan gratis.</span>
       </div>
@@ -826,6 +854,7 @@
         var skillMuseBlock = document.getElementById("skill-muse-block");
         var lainnyaBlock = document.getElementById("lainnya-block");
         var museBlock = document.getElementById("muse-block");
+        var trakteerBlock = document.getElementById("trakteer-block");
 
         function renderHomeSearch() {
           if (!homeQuery) {
@@ -835,12 +864,14 @@
             skillMuseBlock.hidden = false;
             lainnyaBlock.hidden = false;
             museBlock.hidden = false;
+            if (trakteerBlock) trakteerBlock.hidden = false;
             return;
           }
           kategoriBlock.hidden = true;
           skillMuseBlock.hidden = true;
           lainnyaBlock.hidden = true;
           museBlock.hidden = true;
+          if (trakteerBlock) trakteerBlock.hidden = true;
           searchBlock.hidden = false;
           searchNote.hidden = false;
           searchGrid.innerHTML = "";
